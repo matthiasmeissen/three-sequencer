@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+import { steps, createStep } from '/data.js'
 
 
 // Scene
@@ -14,6 +15,10 @@ const cube = new THREE.Mesh(
 )
 
 scene.add(cube)
+
+createStep()
+
+console.log(steps)
 
 
 
