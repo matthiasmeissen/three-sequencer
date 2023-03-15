@@ -9,16 +9,30 @@ const scene = new THREE.Scene()
 
 
 // Objects
-const cube = new THREE.Mesh(
-    new THREE.BoxGeometry(),
-    new THREE.MeshBasicMaterial()
-)
+const createCube = function(pos = {x: 0, y: 0, z:0}) {
+    const cube = new THREE.Mesh(
+        new THREE.BoxGeometry(),
+        new THREE.MeshBasicMaterial()
+    )
+    cube.position.set(pos.x, pos.y, pos.z)
+    scene.add(cube)
+}
 
-scene.add(cube)
+const createRandomSteps = function() {
+    for (let i = 0; i < 10; i++) {
+        createStep({x: (Math.random() - 0.5) * 2, y: (Math.random() - 0.5) * 2, z: (Math.random() - 0.5) * 2})
+    }
+}
 
-createStep()
+const createCubesfromSteps = function() {
+    steps.forEach(step => {
+        createCube(step.position)
+    });
+}
 
-console.log(steps)
+
+createRandomSteps()
+createCubesfromSteps()
 
 
 
