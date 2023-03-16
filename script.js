@@ -6,6 +6,8 @@ import { steps, createStep } from '/data.js'
 let scene, camera, canvas, renderer, controls
 let clock, absTime
 
+const playButton = document.querySelector('.playButton')
+
 function init() {
     scene = new THREE.Scene()
 
@@ -40,18 +42,14 @@ function play() {
 
     sequencerLoop = setInterval(function() {
         const step = getCurrentStep()
-
         for (let i = 0; i < 16; i++) {
             if (step[i]) {
                 console.log('Step')
             }        
         }
-
         moveSequencer()
     }, timeBetweenBeats * 1000)
 }
-
-play()
 
 // Get the current step
 function getCurrentStep() {
@@ -70,6 +68,8 @@ function moveSequencer() {
         step = 0
     }
 }
+
+playButton.addEventListener('click', play)
 
 
 // Objects

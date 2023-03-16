@@ -1,4 +1,9 @@
-
 body {
     margin: 0;
+}
+
+button {
+    position: fixed;
+    bottom: 32px;
+    left: 32px;
 }
