@@ -1,14 +1,15 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
-import { steps, createStep } from '/data.js'
+import { getSteps, createStep } from '/model.js'
 
 
 let scene, camera, canvas, renderer, controls
-let clock, absTime
 
 const playButton = document.querySelector('.playButton')
 const stopButton = document.querySelector('.stopButton')
 
+
+// Set up the scene, camera and renderer
 function init() {
     scene = new THREE.Scene()
 
@@ -28,8 +29,6 @@ function init() {
     })
 
     controls = new OrbitControls( camera, renderer.domElement );
-
-    clock = new THREE.Clock()
 }
 
 init()
@@ -71,6 +70,7 @@ function moveSequencer() {
     }
 }
 
+// Stop the sequencer
 function stop() {
     clearInterval(sequencerLoop)
     isRunning = false
@@ -107,6 +107,7 @@ const createRandomSteps = function() {
 }
 
 const createCubesfromSteps = function() {
+    const steps = getSteps()
     steps.forEach(step => {
         createCube(step.position)
     });
@@ -118,9 +119,7 @@ createCubesfromSteps()
 
 
 // Animate
-function animate() {
-    absTime = clock.getElapsedTime()
-    
+function animate() {    
     renderer.render(scene, camera)
     requestAnimationFrame(animate)
 }
