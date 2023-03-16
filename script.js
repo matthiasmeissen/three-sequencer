@@ -31,6 +31,46 @@ function init() {
 
 init()
 
+let sequencerLoop, step = 0
+
+// Play the sequencer
+function play() {
+    const bpm = 120
+    const timeBetweenBeats = 60 / bpm
+
+    sequencerLoop = setInterval(function() {
+        const step = getCurrentStep()
+
+        for (let i = 0; i < 16; i++) {
+            if (step[i]) {
+                console.log('Step')
+            }        
+        }
+
+        moveSequencer()
+    }, timeBetweenBeats * 1000)
+}
+
+play()
+
+// Get the current step
+function getCurrentStep() {
+    const currentStep = []
+    for (let i = 0; i < 16; i++) {
+        currentStep.push(false)
+    }
+    currentStep[step] = true
+    return currentStep
+}
+
+// Move the sequencer
+function moveSequencer() {
+    step++
+    if (step > 15) {
+        step = 0
+    }
+}
+
 
 // Objects
 const createCube = function(pos = {x: 0, y: 0, z:0}) {
