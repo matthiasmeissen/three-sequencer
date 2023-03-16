@@ -7,6 +7,7 @@ let scene, camera, canvas, renderer, controls
 let clock, absTime
 
 const playButton = document.querySelector('.playButton')
+const stopButton = document.querySelector('.stopButton')
 
 function init() {
     scene = new THREE.Scene()
@@ -33,7 +34,7 @@ function init() {
 
 init()
 
-let sequencerLoop, step = 0
+let sequencerLoop, isRunning = false, step = 0
 
 // Play the sequencer
 function play() {
@@ -48,6 +49,7 @@ function play() {
             }        
         }
         moveSequencer()
+        isRunning = true
     }, timeBetweenBeats * 1000)
 }
 
@@ -69,7 +71,23 @@ function moveSequencer() {
     }
 }
 
-playButton.addEventListener('click', play)
+function stop() {
+    clearInterval(sequencerLoop)
+    isRunning = false
+}
+
+
+playButton.addEventListener('click', function() {
+    if (!isRunning) {
+        play()
+    }
+})
+
+stopButton.addEventListener('click', function() {
+    if (isRunning) {
+        stop()
+    }
+})
 
 
 // Objects

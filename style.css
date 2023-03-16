@@ -2,7 +2,7 @@ body {
     margin: 0;
 }
 
-button {
+div.controls {
     position: fixed;
     bottom: 32px;
     left: 32px;
