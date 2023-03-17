@@ -1,26 +1,30 @@
-import model from '/model.js'
+import Steps from '/steps'
 import View from './view'
 import Sequencer from './sequencer'
 
 
-const view = new View()
+// Initialize the steps
+const sequencerSteps = new Steps();
+sequencerSteps.createRandomSteps();
 
-function update() {
-    /* update the state of your app here */
+
+// Initialize the view
+const view = new View();
+sequencerSteps.steps.forEach((step) => {
+  view.createCube(step.position);
+})
+
+
+// This code is executed every time the sequencer triggers a step
+const updateSequencer = (i) => {
+    view.showActiveStep(i);
+};
+const sequencer = new Sequencer(updateSequencer);
+
+
+// This code is executed every time the view is updated
+function updateView() {
+  // update the state of your app here
 }
 
-view.animate(update);
-
-model.createRandomSteps()
-
-const steps = model.getSteps()
-
-steps.forEach(step => {
-    view.createCube(step.position)
-});
-
-const logStep = (step) => {
-    console.log(`Step ${step + 1} triggered`)
-}
-
-const sequencer = new Sequencer(logStep)
+view.animate(updateView);

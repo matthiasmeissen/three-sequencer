@@ -4,6 +4,10 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 
 class View {    
     constructor() {
+        this.init()
+    }
+
+    init() {
         this.scene = new THREE.Scene()
 
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000)
@@ -38,6 +42,14 @@ class View {
         )
         cube.position.set(pos.x, pos.y, pos.z)
         this.cubes.add(cube)
+    }
+
+    showActiveStep(index) {
+        this.cubes.children.forEach(cube => {
+            cube.material.color.setHSL(0, 0, 1)
+        })
+        this.cubes.children[index].material.color.setHSL(0, 0, 0.2)
+
     }
 
     animate(callback) {
