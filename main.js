@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { getSteps, createStep } from '/model.js'
+import Sequencer from './sequencer'
 
 
 let scene, camera, canvas, renderer, controls
@@ -33,61 +34,7 @@ function init() {
 
 init()
 
-let sequencerLoop, isRunning = false, step = 0
-
-// Play the sequencer
-function play() {
-    const bpm = 120
-    const timeBetweenBeats = 60 / bpm
-
-    sequencerLoop = setInterval(function() {
-        const step = getCurrentStep()
-        for (let i = 0; i < 16; i++) {
-            if (step[i]) {
-                console.log('Step')
-            }        
-        }
-        moveSequencer()
-        isRunning = true
-    }, timeBetweenBeats * 1000)
-}
-
-// Get the current step
-function getCurrentStep() {
-    const currentStep = []
-    for (let i = 0; i < 16; i++) {
-        currentStep.push(false)
-    }
-    currentStep[step] = true
-    return currentStep
-}
-
-// Move the sequencer
-function moveSequencer() {
-    step++
-    if (step > 15) {
-        step = 0
-    }
-}
-
-// Stop the sequencer
-function stop() {
-    clearInterval(sequencerLoop)
-    isRunning = false
-}
-
-
-playButton.addEventListener('click', function() {
-    if (!isRunning) {
-        play()
-    }
-})
-
-stopButton.addEventListener('click', function() {
-    if (isRunning) {
-        stop()
-    }
-})
+const sequencer = new Sequencer()
 
 
 // Objects
