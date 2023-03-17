@@ -1,3 +1,6 @@
+import { Note, Scale} from 'tonal'
+
+
 class Steps {
     constructor() {
         this.steps = []
@@ -24,6 +27,27 @@ class Steps {
 
         this.steps.push(step)
     }
+
+    setNotes(inputScale  = 'a4 major') {
+        const scale = Scale.get(inputScale)
+
+        this.steps.forEach(step => {
+            const pos = step.position
+            const note = scale.notes[pos.x]
+            step.note = note
+        })
+    }
+
+    extendScale(inputScale = 'a4 major') {
+        const scale = Scale.get(inputScale).notes
+        const transposeUp = scale.map(Note.transposeBy('8P'))
+        const transposeDown = scale.map(Note.transposeBy('-8P'))
+
+        const newScale = [...transposeDown, ...scale, ...transposeUp]
+
+        return newScale
+    }
+
 
     createRandomSteps(numberOfSteps = 16) {
         for (let i = 0; i < numberOfSteps; i++) {

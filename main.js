@@ -6,6 +6,12 @@ import Sequencer from './sequencer'
 // Initialize the steps
 const sequencerSteps = new Steps();
 sequencerSteps.createRandomSteps();
+sequencerSteps.setNotes('A4 major');
+
+console.log(sequencerSteps.getSteps());
+
+
+console.log(sequencerSteps.extendScale('A4 major'));
 
 
 // Initialize the view
