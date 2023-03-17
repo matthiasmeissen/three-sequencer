@@ -1,9 +1,9 @@
 import model from '/model.js'
-import view from './view'
+import View from './view'
 import Sequencer from './sequencer'
 
 
-view.init()
+const view = new View()
 
 function update() {
     /* update the state of your app here */

@@ -2,53 +2,54 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 
 
-let scene, camera, canvas, renderer, controls
+class View {    
+    constructor() {
+        this.scene = new THREE.Scene()
 
-function init() {
-    scene = new THREE.Scene()
+        this.camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000)
+        this.camera.position.z = 5
 
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000)
-    camera.position.z = 5
+        this.canvas = document.querySelector('.webgl')
 
-    canvas = document.querySelector('.webgl')
+        this.renderer = new THREE.WebGLRenderer({canvas: this.canvas})
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+        this.renderer.setSize(window.innerWidth, window.innerHeight)
 
-    renderer = new THREE.WebGLRenderer({canvas})
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    renderer.setSize(window.innerWidth, window.innerHeight)
+        window.addEventListener('resize', function() {
+            this.camera.aspect = window.innerWidth / window.innerHeight
+            this.camera.updateProjectionMatrix()
+            this.renderer.setSize(window.innerWidth, window.innerHeight)
+        })
 
-    window.addEventListener('resize', function() {
-        camera.aspect = window.innerWidth / window.innerHeight
-        camera.updateProjectionMatrix()
-        renderer.setSize(window.innerWidth, window.innerHeight)
-    })
+        this.controls = new OrbitControls( this.camera, this.renderer.domElement );
 
-    controls = new OrbitControls( camera, renderer.domElement );
-}
+        this.createCubes()
+    }
 
-const createCube = function(pos = {x: 0, y: 0, z:0}) {
-    const cube = new THREE.Mesh(
-        new THREE.BoxGeometry(),
-        new THREE.MeshBasicMaterial()
-    )
-    cube.position.set(pos.x, pos.y, pos.z)
-    scene.add(cube)
-}
+    createCubes() {
+        this.cubes = new THREE.Group()
+        this.scene.add(this.cubes)
+    }
 
+    createCube(pos = {x: 0, y: 0, z:0}) {
+        const cube = new THREE.Mesh(
+            new THREE.BoxGeometry(),
+            new THREE.MeshBasicMaterial()
+        )
+        cube.position.set(pos.x, pos.y, pos.z)
+        this.cubes.add(cube)
+    }
 
-function animate(callback) {
-    requestAnimationFrame(() => {
-        renderer.render(scene, camera)
-        animate(callback);
-    });
+    animate(callback) {
+        requestAnimationFrame(() => {
+            this.renderer.render(this.scene, this.camera)
+            this.animate(callback);
+        });
 
-    if (typeof callback === 'function') {
-        callback();
+        if (typeof callback === 'function') {
+            callback();
+        }
     }
 }
 
-
-export default {
-    init,
-    createCube,
-    animate
-}
+export default View
