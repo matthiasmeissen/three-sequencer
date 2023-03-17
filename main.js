@@ -34,7 +34,12 @@ function init() {
 
 init()
 
-const sequencer = new Sequencer()
+
+const logStep = (step) => {
+    console.log(`Step ${step + 1} triggered`)
+}
+
+const sequencer = new Sequencer(logStep)
 
 
 // Objects

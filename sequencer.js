@@ -1,9 +1,11 @@
 export default class Sequencer {
-    constructor() {
+    constructor(callback) {
         this.sequencerLoop = null
         this.isRunning = false
+        this.bpm = 120
         this.step = 0
         this.numberOfSteps = 16
+        this.callback = callback
 
         this.init()
     }
@@ -14,14 +16,13 @@ export default class Sequencer {
     }
 
     play() {
-        const bpm = 120
-        const timeBetweenBeats = 60 / bpm
+        const timeBetweenBeats = 60 / this.bpm
 
         this.sequencerLoop = setInterval(() => {
             const step = this.getCurrentStep()
             for (let i = 0; i < 16; i++) {
                 if (step[i]) {
-                    console.log('Step')
+                    this.callback(i)
                 }        
             }
             this.moveSequencer()
