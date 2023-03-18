@@ -20,7 +20,7 @@ export default class Sequencer {
 
         this.sequencerLoop = setInterval(() => {
             const step = this.getCurrentStep()
-            for (let i = 0; i < 16; i++) {
+            for (let i = 0; i < this.numberOfSteps; i++) {
                 if (step[i]) {
                     this.callback(i)
                 }        
