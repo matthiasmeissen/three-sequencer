@@ -25,7 +25,7 @@ class View {
         this.cubeAddEvent = new CustomEvent('cubeAdd', { bubbles: true });
 
         window.addEventListener('resize', () => this.onResize())
-
+        window.addEventListener('mousemove', (event) => this.onMouseMove(event))
         window.addEventListener('mousedown', (event) => this.onMouseDown(event))
 
         this.controls = new OrbitControls( this.camera, this.renderer.domElement );
@@ -53,12 +53,15 @@ class View {
         this.renderer.setSize(window.innerWidth, window.innerHeight)
     }
 
-    onMouseDown(event) {
+    onMouseMove(event) {
         this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         this.mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
 
         this.raycaster.setFromCamera(this.mouse, this.camera);
+    }
 
+
+    onMouseDown(event) {
         const intersects = this.raycaster.intersectObjects(this.cubes.children);
     
         if (intersects.length === 0) {
