@@ -19,11 +19,16 @@ class View {
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
         this.renderer.setSize(window.innerWidth, window.innerHeight)
 
+        this.raycaster = new THREE.Raycaster();
+        this.mouse = new THREE.Vector2();
+
         window.addEventListener('resize', () => {
             this.camera.aspect = window.innerWidth / window.innerHeight
             this.camera.updateProjectionMatrix()
             this.renderer.setSize(window.innerWidth, window.innerHeight)
         })
+
+        window.addEventListener('mousedown', (event) => this.onMouseDown(event))
 
         this.controls = new OrbitControls( this.camera, this.renderer.domElement );
 
@@ -43,6 +48,27 @@ class View {
         cube.position.set(pos.x, pos.y, pos.z)
         this.cubes.add(cube)
     }
+
+    onMouseDown(event) {
+        this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        this.mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+
+        this.raycaster.setFromCamera(this.mouse, this.camera);
+
+        const intersects = this.raycaster.intersectObjects(this.cubes.children);
+
+        if (intersects.length > 0) {
+            const hoveredCubePosition = intersects[0].object.position
+            const hoveredFaceNormal = intersects[0].face.normal
+
+            const newPosition = hoveredCubePosition.clone().add(hoveredFaceNormal)
+
+            this.createCube(newPosition)
+
+            console.log(newPosition)
+        }
+    }
+
 
     showActiveStep(index) {
         this.cubes.children.forEach(cube => {
