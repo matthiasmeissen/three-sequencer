@@ -60,19 +60,19 @@ class View {
         this.raycaster.setFromCamera(this.mouse, this.camera);
 
         const intersects = this.raycaster.intersectObjects(this.cubes.children);
-
-        if (intersects.length > 0) {
-            const hoveredCubePosition = intersects[0].object.position
-            const hoveredFaceNormal = intersects[0].face.normal
-            const newPosition = hoveredCubePosition.clone().add(hoveredFaceNormal)
-
-            this.createCube(newPosition)
-
-            this.cubeAddEvent.position = newPosition
-
-            document.dispatchEvent(this.cubeAddEvent)
+    
+        if (intersects.length === 0) {
+            return
         }
+            
+        const hoveredCubePosition = intersects[0].object.position
+        const hoveredFaceNormal = intersects[0].face.normal
+        const newPosition = hoveredCubePosition.clone().add(hoveredFaceNormal)
 
+        this.createCube(newPosition)
+
+        this.cubeAddEvent.position = newPosition
+        document.dispatchEvent(this.cubeAddEvent)
     }
 
 

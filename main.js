@@ -5,10 +5,7 @@ import Sequencer from './sequencer'
 
 // Initialize the steps
 const sequencerSteps = new Steps();
-sequencerSteps.createRandomSteps();
-sequencerSteps.setNotes('A4 major');
-
-console.log(sequencerSteps.getSteps());
+sequencerSteps.createStep({x: 0, y: 0, z: 0});
 
 
 // Initialize the view
@@ -17,9 +14,12 @@ sequencerSteps.steps.forEach((step) => {
   view.createCube(step.position);
 })
 
+// Custome event for when a cube is added
 document.addEventListener('cubeAdd', (event) => {
   sequencerSteps.createStep(event.position);
   sequencerSteps.setNotes('A4 major');
+
+  console.log(sequencerSteps.steps);
 });
 
 
