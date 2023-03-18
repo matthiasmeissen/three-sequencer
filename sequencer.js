@@ -4,7 +4,7 @@ export default class Sequencer {
         this.isRunning = false
         this.bpm = 120
         this.step = 0
-        this.numberOfSteps = 16
+        this.numberOfSteps = 1
         this.callback = callback
 
         this.init()
