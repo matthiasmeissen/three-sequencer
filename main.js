@@ -22,7 +22,7 @@ const sound = new Sound();
 const updateSequencer = (i) => {
     view.showActiveStep(i);
 
-    sound.playNote(440, 0.2);
+    sound.playNote(sequencerSteps.steps[i].frequency, 0.2);
 };
 const sequencer = new Sequencer(updateSequencer);
 

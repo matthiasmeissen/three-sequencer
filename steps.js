@@ -18,11 +18,12 @@ class Steps {
         this.steps[i] = newStep
     }
 
-    createStep(position = {x: 0, y: 0, z: 0}, type = 'trigger', note = 'A4') {
+    createStep(position = {x: 0, y: 0, z: 0}, type = 'trigger', note = 'A4', frequency = 440) {
         const step = {
             position: position,
             type: type,
-            note: note
+            note: note,
+            frequency: frequency
         }
 
         this.steps.push(step)
@@ -51,6 +52,7 @@ class Steps {
             }
 
             step.note = note
+            step.frequency = Note.freq(note)
         })
     }
 
