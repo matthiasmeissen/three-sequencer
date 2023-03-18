@@ -29,11 +29,12 @@ class Steps {
     }
 
     setNotes(inputScale  = 'a4 major') {
-        const scale = Scale.get(inputScale)
+        const scale = this.extendScale(inputScale)
+        const initialScaleLength = scale.length / 3
 
         this.steps.forEach(step => {
             const pos = step.position
-            const note = scale.notes[pos.x]
+            const note = scale[pos.x + initialScaleLength]
             step.note = note
         })
     }

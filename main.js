@@ -11,9 +11,6 @@ sequencerSteps.setNotes('A4 major');
 console.log(sequencerSteps.getSteps());
 
 
-console.log(sequencerSteps.extendScale('A4 major'));
-
-
 // Initialize the view
 const view = new View();
 sequencerSteps.steps.forEach((step) => {
