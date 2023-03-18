@@ -1,6 +1,7 @@
 import Steps from '/steps'
 import View from './view'
 import Sequencer from './sequencer'
+import Sound from './sound'
 
 
 // Initialize the steps
@@ -14,10 +15,14 @@ sequencerSteps.steps.forEach((step) => {
   view.createCube(step.position);
 })
 
+const sound = new Sound();
+
 
 // This code is executed every time the sequencer triggers a step
 const updateSequencer = (i) => {
     view.showActiveStep(i);
+
+    sound.playNote(440, 0.2);
 };
 const sequencer = new Sequencer(updateSequencer);
 
