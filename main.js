@@ -17,6 +17,11 @@ sequencerSteps.steps.forEach((step) => {
   view.createCube(step.position);
 })
 
+document.addEventListener('cubeAdd', (event) => {
+  sequencerSteps.createStep(event.position);
+  sequencerSteps.setNotes('A4 major');
+});
+
 
 // This code is executed every time the sequencer triggers a step
 const updateSequencer = (i) => {

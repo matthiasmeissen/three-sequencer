@@ -22,11 +22,9 @@ class View {
         this.raycaster = new THREE.Raycaster();
         this.mouse = new THREE.Vector2();
 
-        window.addEventListener('resize', () => {
-            this.camera.aspect = window.innerWidth / window.innerHeight
-            this.camera.updateProjectionMatrix()
-            this.renderer.setSize(window.innerWidth, window.innerHeight)
-        })
+        this.cubeAddEvent = new CustomEvent('cubeAdd', { bubbles: true });
+
+        window.addEventListener('resize', () => this.onResize())
 
         window.addEventListener('mousedown', (event) => this.onMouseDown(event))
 
@@ -49,6 +47,12 @@ class View {
         this.cubes.add(cube)
     }
 
+    onResize() {
+        this.camera.aspect = window.innerWidth / window.innerHeight
+        this.camera.updateProjectionMatrix()
+        this.renderer.setSize(window.innerWidth, window.innerHeight)
+    }
+
     onMouseDown(event) {
         this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         this.mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
@@ -60,13 +64,15 @@ class View {
         if (intersects.length > 0) {
             const hoveredCubePosition = intersects[0].object.position
             const hoveredFaceNormal = intersects[0].face.normal
-
             const newPosition = hoveredCubePosition.clone().add(hoveredFaceNormal)
 
             this.createCube(newPosition)
 
-            console.log(newPosition)
+            this.cubeAddEvent.position = newPosition
+
+            document.dispatchEvent(this.cubeAddEvent)
         }
+
     }
 
 
