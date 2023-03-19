@@ -11,8 +11,9 @@ export default class Sequencer {
     }
 
     init() {
-        this.addPlayButton(document.querySelector('.playButton'))
-        this.addStopButton(document.querySelector('.stopButton'))   
+        const controls = document.querySelector('.controls')
+        this.addPlayButton(controls)
+        this.addStopButton(controls)
     }
 
     play() {
@@ -52,13 +53,27 @@ export default class Sequencer {
     }
 
     createButton(className, innerHTML) {
-        const playButton = document.createElement('button')
-        playButton.classList.add(className)
-        playButton.innerHTML = innerHTML
-        return playButton
+        const button = document.createElement('button')
+        button.classList.add(className)
+        button.innerHTML = innerHTML
+        return button
     }
 
-    addPlayButton(playButton) {
+    createScaleSelector(scales) {
+        const scaleSelector = document.createElement('select')
+        scaleSelector.classList.add('scaleSelector')
+        scales.forEach(scale => {
+            const option = document.createElement('option')
+            option.value = scale
+            option.innerHTML = scale
+            scaleSelector.appendChild(option)
+        })
+        return scaleSelector
+    }
+
+    addPlayButton(parent) {
+        const playButton = this.createButton('playButton', 'Play')
+        parent.appendChild(playButton)
         playButton.addEventListener('click', () => {
             if (this.isRunning === false) { 
                 this.play()
@@ -66,7 +81,9 @@ export default class Sequencer {
         })
     }
 
-    addStopButton(stopButton) {
+    addStopButton(parent) {
+        const stopButton = this.createButton('stopButton', 'Stop')
+        parent.appendChild(stopButton)
         stopButton.addEventListener('click', () => {
             if (this.isRunning === true) {
                 this.stop()

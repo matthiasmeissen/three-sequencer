@@ -56,11 +56,9 @@ class Steps {
         })
     }
 
-    // the step position is a vec3 that defines the note
-    // pos x cycles through the scale where 0 is the root note
-    // pos y takes the note and transposes it up an ocatve
-    // pos z leaves the note as is
-
+    getScales() {
+        return Scale.names()
+    }
 
     extendScale(inputScale = 'a4 major') {
         const scale = Scale.get(inputScale).notes
