@@ -77,6 +77,6 @@ export default class Sequencer {
             option.innerHTML = scale
             scaleSelector.appendChild(option)
         })
-        return scaleSelector
+        this.controls.appendChild(scaleSelector)
     }
 }

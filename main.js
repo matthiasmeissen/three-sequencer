@@ -15,6 +15,8 @@ sequencerSteps.steps.forEach((step) => {
   view.createCube(step.position);
 })
 
+
+// Initialize the sound
 const sound = new Sound();
 
 
@@ -26,6 +28,8 @@ const updateSequencer = (i) => {
 };
 const sequencer = new Sequencer(updateSequencer);
 
+
+sequencer.createScaleSelector(sequencerSteps.getScales());
 
 // Custome event for when a cube is added
 document.addEventListener('cubeAdd', (event) => {
