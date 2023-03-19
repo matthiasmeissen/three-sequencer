@@ -68,7 +68,7 @@ export default class Sequencer {
         this.controls.appendChild(button);
     }
 
-    createScaleSelector(scales) {
+    createScaleSelector(scales, callback) {
         const scaleSelector = document.createElement('select')
         scaleSelector.classList.add('scaleSelector')
         scales.forEach(scale => {
@@ -78,5 +78,10 @@ export default class Sequencer {
             scaleSelector.appendChild(option)
         })
         this.controls.appendChild(scaleSelector)
+
+        // This gets called when the user changes the scale and returns the selected scale
+        scaleSelector.addEventListener('change', (e) => {
+            callback(e.target.value)
+        })
     }
 }

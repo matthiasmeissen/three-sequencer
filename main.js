@@ -28,13 +28,18 @@ const updateSequencer = (i) => {
 };
 const sequencer = new Sequencer(updateSequencer);
 
+const showSelectedScale = (scale) => {
+  let newScale = `a4 ${scale}`;
+  sequencerSteps.setScale(newScale);
+}
 
-sequencer.createScaleSelector(sequencerSteps.getScales());
+
+sequencer.createScaleSelector(sequencerSteps.getScales(), showSelectedScale);
 
 // Custome event for when a cube is added
 document.addEventListener('cubeAdd', (event) => {
   sequencerSteps.createStep(event.position);
-  sequencerSteps.setNotes('A4 major');
+  sequencerSteps.setNotes();
   sequencer.numberOfSteps += 1;
 
   console.log(sequencerSteps.steps);

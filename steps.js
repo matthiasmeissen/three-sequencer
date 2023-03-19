@@ -4,6 +4,7 @@ import { Note, Scale} from 'tonal'
 class Steps {
     constructor() {
         this.steps = []
+        this.inputScale = 'a4 major'
     }
 
     getSteps() {
@@ -29,19 +30,13 @@ class Steps {
         this.steps.push(step)
     }
 
-    setNotes(inputScale  = 'a4 major') {
-        const scale = this.extendScale(inputScale)
+    setNotes() {
+        const scale = this.extendScale(this.inputScale)
         const initialScaleLength = scale.length / 3
 
         this.steps.forEach(step => {
-            // get the step position
             const pos = step.position
-
-            // Create the note
-            let note
-
-            // take x position an use it to get the note from the scale
-            note = scale[pos.x + initialScaleLength]
+            let note = scale[pos.x + initialScaleLength]
 
             const transposeValue = ['8P', '15P', '22P', '29P']
 
@@ -60,7 +55,12 @@ class Steps {
         return Scale.names()
     }
 
-    extendScale(inputScale = 'a4 major') {
+    setScale(scale) {
+        this.inputScale = scale
+        this.setNotes()
+    }
+
+    extendScale(inputScale) {
         const scale = Scale.get(inputScale).notes
         const transposeUp = scale.map(Note.transposeBy('8P'))
         const transposeDown = scale.map(Note.transposeBy('-8P'))
