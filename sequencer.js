@@ -22,6 +22,8 @@ export default class Sequencer {
                 this.stop();
             }
         })
+
+        this.addSpeedControl()
     }
 
     play() {
@@ -66,6 +68,18 @@ export default class Sequencer {
         button.innerHTML = innerHTML;
         button.addEventListener('click', clickHandler);
         this.controls.appendChild(button);
+    }
+
+    addSpeedControl() {
+        const speedControl = document.createElement('input')
+        speedControl.classList.add('speedControl')
+        speedControl.type = 'number'
+        speedControl.value = this.bpm
+        this.controls.appendChild(speedControl)
+
+        speedControl.addEventListener('change', (e) => {
+            this.bpm = e.target.value
+        })
     }
 
     createScaleSelector(scales, callback) {
