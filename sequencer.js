@@ -51,6 +51,13 @@ export default class Sequencer {
         this.isRunning = false
     }
 
+    createButton(className, innerHTML) {
+        const playButton = document.createElement('button')
+        playButton.classList.add(className)
+        playButton.innerHTML = innerHTML
+        return playButton
+    }
+
     addPlayButton(playButton) {
         playButton.addEventListener('click', () => {
             if (this.isRunning === false) { 
