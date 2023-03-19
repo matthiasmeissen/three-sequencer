@@ -77,6 +77,7 @@ export default class Sequencer {
             option.innerHTML = scale
             scaleSelector.appendChild(option)
         })
+        scaleSelector.value = 'major'
         this.controls.appendChild(scaleSelector)
 
         // This gets called when the user changes the scale and returns the selected scale
