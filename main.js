@@ -28,15 +28,17 @@ const updateSequencer = (i) => {
 };
 const sequencer = new Sequencer(updateSequencer);
 
-const showSelectedScale = (scale) => {
+
+// Create scale selector and pass function that runs when new scale is selected
+const setNewScale = (scale) => {
   let newScale = `a4 ${scale}`;
   sequencerSteps.setScale(newScale);
 }
 
+sequencer.createScaleSelector(sequencerSteps.getScales(), setNewScale);
 
-sequencer.createScaleSelector(sequencerSteps.getScales(), showSelectedScale);
 
-// Custome event for when a cube is added
+// Custom event for when a cube is added
 document.addEventListener('cubeAdd', (event) => {
   sequencerSteps.createStep(event.position);
   sequencerSteps.setNotes();

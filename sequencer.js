@@ -80,7 +80,6 @@ export default class Sequencer {
         scaleSelector.value = 'major'
         this.controls.appendChild(scaleSelector)
 
-        // This gets called when the user changes the scale and returns the selected scale
         scaleSelector.addEventListener('change', (e) => {
             callback(e.target.value)
         })

@@ -31,6 +31,7 @@ class View {
         this.controls = new OrbitControls( this.camera, this.renderer.domElement );
 
         this.createCubes()
+        this.addLights()
     }
 
     createCubes() {
@@ -41,10 +42,23 @@ class View {
     createCube(pos = {x: 0, y: 0, z:0}) {
         const cube = new THREE.Mesh(
             new THREE.BoxGeometry(),
-            new THREE.MeshBasicMaterial()
+            new THREE.MeshStandardMaterial()
         )
         cube.position.set(pos.x, pos.y, pos.z)
         this.cubes.add(cube)
+    }
+
+    addLights() {
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
+        this.scene.add(ambientLight)
+
+        const pointLight = new THREE.PointLight(0xffffff, 0.5)
+        pointLight.position.set(-2, 4, 4)
+        this.scene.add(pointLight)
+
+        const pointLight2 = new THREE.PointLight(0xffffff, 0.5)
+        pointLight2.position.set(2, 4, -2)
+        this.scene.add(pointLight2)
     }
 
     onResize() {
