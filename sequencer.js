@@ -6,14 +6,22 @@ export default class Sequencer {
         this.step = 0
         this.numberOfSteps = 1
         this.callback = callback
-
+        this.controls = document.querySelector('.controls')
         this.init()
     }
 
     init() {
-        const controls = document.querySelector('.controls')
-        this.addPlayButton(controls)
-        this.addStopButton(controls)
+        this.addControlButton('playButton', 'Play', () => {
+            if (!this.isRunning) {
+                this.play();
+            }
+        })
+
+        this.addControlButton('stopButton', 'Stop', () => {
+            if (this.isRunning) {
+                this.stop();
+            }
+        })
     }
 
     play() {
@@ -24,7 +32,7 @@ export default class Sequencer {
             for (let i = 0; i < this.numberOfSteps; i++) {
                 if (step[i]) {
                     this.callback(i)
-                }        
+                }
             }
             this.moveSequencer()
             this.isRunning = true
@@ -52,11 +60,12 @@ export default class Sequencer {
         this.isRunning = false
     }
 
-    createButton(className, innerHTML) {
-        const button = document.createElement('button')
-        button.classList.add(className)
-        button.innerHTML = innerHTML
-        return button
+    addControlButton(className, innerHTML, clickHandler) {
+        const button = document.createElement('button');
+        button.classList.add(className);
+        button.innerHTML = innerHTML;
+        button.addEventListener('click', clickHandler);
+        this.controls.appendChild(button);
     }
 
     createScaleSelector(scales) {
@@ -69,25 +78,5 @@ export default class Sequencer {
             scaleSelector.appendChild(option)
         })
         return scaleSelector
-    }
-
-    addPlayButton(parent) {
-        const playButton = this.createButton('playButton', 'Play')
-        parent.appendChild(playButton)
-        playButton.addEventListener('click', () => {
-            if (this.isRunning === false) { 
-                this.play()
-            }
-        })
-    }
-
-    addStopButton(parent) {
-        const stopButton = this.createButton('stopButton', 'Stop')
-        parent.appendChild(stopButton)
-        stopButton.addEventListener('click', () => {
-            if (this.isRunning === true) {
-                this.stop()
-            }
-        })
     }
 }
